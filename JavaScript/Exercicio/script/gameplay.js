@@ -37,6 +37,7 @@ switch(dif){
 console.log(sortedNumber);
 
 function exit() {
+    
     window.location.replace('./home.html');
 }
 
@@ -44,11 +45,10 @@ function exit() {
 function gameplay() {
     let number = parseInt(inputNumber.value);
 
-    if ( number == sortedNumber ) {
-        result.textContent = 'Você acertou !!';
-        // Informa o usuário da vitória e logo em seguida manda para a tela inicial
-
-        return;
+    if (number === sortedNumber) {
+        result.textContent = 'Parabéns! Você acertou! Retornando para a página principal...'
+        exit()
+        return ;
     }
     else {
         result.textContent = 'Você errou !!';
@@ -57,3 +57,4 @@ function gameplay() {
         triesField.textContent = tries;
     }
 }
+
