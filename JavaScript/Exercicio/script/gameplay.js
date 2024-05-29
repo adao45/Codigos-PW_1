@@ -2,11 +2,14 @@
 const parameter = new URLSearchParams(window.location.search);
 const dif = parameter.get('dif');
 // Variáveis do HTML
+let number = 0
 const difField = document.getElementById('dif');
 const result = document.getElementById('result');
-const inputNumber = document.getElementById('inputNumber');
+var inputNumber = document.getElementById('inputNumber');
 const triesField = document.getElementById('tries');
 const tipsField = document.getElementById('tips');
+const sim = document.getElementById("btnDicasSim")
+let dica= document.getElementById("dica")
 // Variáveis do Jogo
 let sortedNumber = 0;
 let tries = 4;
@@ -14,6 +17,8 @@ let tips = 2;
 
 triesField.textContent = tries;
 tipsField.textContent = tips;
+
+
 
 
 switch(dif){
@@ -36,25 +41,53 @@ switch(dif){
 
 console.log(sortedNumber);
 
-function exit() {
-    
+async function exit() {
+    await sleep(3000);
     window.location.replace('./home.html');
+}
+
+function sleep (time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 
 function gameplay() {
-    let number = parseInt(inputNumber.value);
+    number = parseInt(inputNumber.value);
+    inputNumber.value = null;
+   
+    if ( number == sortedNumber ) {
+        result.textContent = 'Uau, eu não estava esperando por essa!! HAHAHA você realmente acertou!!!!!!! Meus parabéns Vencedor.';
 
-    if (number === sortedNumber) {
-        result.textContent = 'Parabéns! Você acertou! Retornando para a página principal...'
-        exit()
-        return ;
+        return exit();
     }
     else {
-        result.textContent = 'Você errou !!';
-        tries = tries -1;
+        if ( tries > 0 ) {
+            tries = tries -1;
 
-        triesField.textContent = tries;
+            triesField.textContent = tries;
+
+            result.textContent = 'Buuuuuuh não foi dessa vez !!! Você tem ' + tries + ' tentativas restantes';
+        }
+        if(tries <= 0) {
+            result.textContent = "GAME OVER";
+
+            return exit();
+        }
+
+        
+         // Dar uma dica sempre que o jogador errar (limitado ao número de dicas restantes)
+        // Dar uma dica ao pressionar um botão da interface
+        // Apertar um botão e solicitar um número para dar a dica
     }
+
+    
 }
 
+function dicas (){
+    if(number > sortedNumber){
+        dica.textContent= 'O número sorteado é menor que seu aposta'
+    }
+    else{
+        dica.textContent= 'O número sorteado é maior que seu aposta'
+    }
+}
