@@ -1,88 +1,45 @@
-BEGIN TRANSACTION
+drop table produtos;
 
+CREATE table IF NOt EXISTS produtos(
+    id integer PRIMARY KEY,
+    nome varchar(64) not NULL,
+    preco float(32,2) not NULL,
+    quantidade integer not NULL
+);
+
+insert into produtos(nome,preco,quantidade) values('Abacate', 1.99, 1000);  
+insert into produtos(nome,preco,quantidade) values('Banana', 2.89, 827);  
+insert into produtos(nome,preco,quantidade) values('Cenoura', 7.25, 600);
+Insert into produtos(nome,preco,quantidade) values('Damasco', 23.26, 80);  
+insert into produtos(nome,preco,quantidade) Values('Escarola', 0.89, 50);
+
+ 
 CREATE TABLE if not EXISTS clientes(
     id INTEGER PRIMARY KEY,
     nome VARCHAR(64) NOT NULL,
+    CPF INTEGER NOT NULL UNIQUE,
+    celular integer not NULL unique,
+    Rua varchar(64) not NULL,
+    Numero varchar(10) not NULL,
     idade INTEGER,
     email VARCHAR(64) UNIQUE NOT NULL
 );
 
-DROP table clientes;
+insert into clientes(nome, cpf, celular, Rua, Numero, idade, email)values('Pedro Pedreira', 0029872599, 42991251819, 'Das Pamanhas', 45, 80, 'pedropedreira@yahoo.com.br');
+insert into clientes(nome, cpf, celular, rua, numero, idade, email)values('Pedrita Pedreira', 0029872235, 42991251256, 'Das Mangueiras', 18, 78, 'pedrritapedreira@yahoo.com.br');
+insert into clientes(nome, cpf, celular, rua, numero, idade, email)values('Juventina dos Santos', 1529872235, 42981251256,'Salvadori', 15, 27,'jdossanntos@yahoo.com.br');
+insert into clientes(nome, cpf, celular, rua, numero, idade, email)values('Washington da Silva', 15789126791, 42981183565, 'Macabeiras', '985A', 16, 'wdasilva@yahoo.com.br');
 
-insert into clientes(nome, idade, email)
-values(
-  'Pedro Pedreira',
-  99,
-  'pedropedreira@yahoo.com.br'
-  );
-  
-  insert into clientes(nome, idade, email)
-values(
-  'Maria Pedreira',
-  98,
-  'mariadreira@yahoo.com.br'
-  );
-  
-  insert into clientes(nome, idade, email)
-values(
-  'Julinha Pedreira',
-  75,
-  'julinhapedreira@yahoo.com.br'
-  );
-  
-  INSERT INTO clientes(nome, idade, email)
-values(
-    'Adão',
-    45,
-    'adao@gmail.com'
-);
+select * FROM clientes
 
-INSERT INTO clientes(nome, idade, email)
-values(
-    'Viviane',
-    43,
-    'vivi@gmail.com'
-);
+BEGIN TRANSACTION
+UPDATE produtos SET preco =15.99 where id=3;
 
-INSERT INTO clientes(nome, idade, email)
-values(
-    'Chrystian',
-    27,
-    'chrystian@gmail.com'
-);
-  
- UPDATE clientes SET idade = 40  
- 
-  UPDATE clientes SET idade = 99 WHERE id= 1;
-  UPDATE clientes SET idade = 98 WHERE id= 2;
-  UPDATE clientes SET idade = 75 WHERE id= 3;
-  UPDATE clientes SET idade = 45 WHERE id= 4;
-  UPDATE clientes SET idade = 42 WHERE id= 5;
-  UPDATE clientes SET idade = 27 WHERE id= 6
-  
-  
-  
-  --COMMIT
-
+--commit
 ROLLBACK
-  
-  
-  BEGIN TRANSACTION
-  DELETE FROM clientes where id=1
-  
-  
-  alter TABLE clientes add column biografia varchar(300);
-  
-  UPDATE clientes SET biografia = 'milionario' WHERE id= 1;
-  UPDATE clientes SET biografia = 'contador' WHERE id= 2;
-  UPDATE clientes SET biografia = 'administrador' WHERE id= 3;
-  UPDATE clientes SET biografia = 'publicitario' WHERE id= 4;
-  UPDATE clientes SET biografia = 'preparador fisico' WHERE id= 5;
-  UPDATE clientes SET biografia = 'professor' WHERE id= 6
-  
-  
-  
-  
-  select * from clientes
 
-  SELECT nome,idade,email,biografia from clientes WHERE idade>=90
+BEGIN TRANSACTION
+DELETE FROM produtos where id= 2
+--commit
+ROLLBACK
+
