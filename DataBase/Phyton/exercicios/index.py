@@ -29,7 +29,7 @@ while(inputMenu!=0):
            quantity=int(input('Quantidade: ')); 
             
            produtos.create(name,price,quantity);
-        except:
+       except:
            print('Something went wrong')
         
 
@@ -49,6 +49,30 @@ while(inputMenu!=0):
                 print(f'\n{data['data']}')
             else:
                 print(f'\nUnknown Error');
+    
+    #Find
+    if (inputMenu == 3):
+        data=[];
+        name=str('');
+        try:
+            print('\nProcurar produto específico.');
+            name=input('Nome do Produto: ');
+            
+            data=produtos.findByName(name);
+
+            #Exibir dados corretamente
+            if(data['code']==200):
+                print(f'\nNome: {data['data'][0]}, Preço: {data['data'][1]}, Quantidade: {data['data'][2]} un')          
+                
+            else:    
+                #Produto não encontrado ou erro de banco de dados
+                if (data['code']==404 or data['code']==500):
+                    print(f'\n{data['message']}');
+                else:
+                    #Erro não previsto    
+                    print(f'\nUnknown Error');
+        except:
+            print('Somenthing went wrong')     
 
     input ('\nDigite enter para continuar..');
     os.system('cls')

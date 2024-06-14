@@ -27,8 +27,17 @@ def create(name:str,price:int,quantity:int):
                 
 
 
-def finBy():
-    pass;
+def finByName(name:str):
+    try:
+        cursor.execute('SELECT * FROM Products WHERE name =?', (name,));
+        product = cursor.fetchone();
+
+        if(product == None):
+            return {'code':404, 'message' : 'Product not found'};
+        return{'code':200, 'data': product};
+    except:
+        return{'code':500, 'message' : 'Internal Error'};
+
 
 def select():
 
